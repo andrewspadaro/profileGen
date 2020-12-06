@@ -67,9 +67,9 @@ inquirer .prompt([
         if (answers.selectedChoice === "add engineer") {
             addEngineer();
         } else if(answers.selectedChoice === "add intern"){
-            // addIntern()
+            addIntern();
         } else {
-            // take team and create a file called team.html in the outp[ut folder
+            // take team and create a file called team.html in the output folder
             fs.writeFile()
         }
       })
