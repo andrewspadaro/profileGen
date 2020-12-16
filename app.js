@@ -4,7 +4,7 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-const Employee = require("./lib/Employee")
+
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
@@ -13,9 +13,7 @@ const team = [];
 
 
 
-const employee1 = new Employee("john", 5, "email")
-console.log(employee1);
-console.log(employee1.getEmail())
+
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -68,9 +66,11 @@ inquirer .prompt([
             addEngineer();
         } else if(answers.selectedChoice === "add intern"){
             addIntern();
+          
         } else {
             // take team and create a file called team.html in the output folder
-            fs.writeFile()
+            console.log('test')
+            fs.writeFileSync(outputPath, render(team), 'utf-8')
         }
       })
       .catch(error => {
@@ -82,6 +82,74 @@ inquirer .prompt([
       });
   } 
 
+function addEngineer() {
+  inquirer .prompt([
+    {
+        name: "engineerName",
+        type: "input",
+        message: "What is the engineers name?"
+    },
+    {
+        name: "engineerId",
+        type: "input",
+        message: "What is the engineers ID?"
+    },
+    {
+        name: "engineerEmail",
+        type: "input",
+        message: "What is the engineers Email?"
+    },
+    {
+        name: "gitHub",
+        type: "input",
+        message: "What is the engineers github?"
+    },
+  ])
+  .then(answers => {
+    const engineer = new Engineer (answers.engineerName, answers.engineerId, answers.engineerEmail, answers.gitHub)
+    team.push(engineer)
+    console.log(team)
+    managerSelection()
+  })
+  .catch(error => {
+    if(error.isTtyError) {
+      // Prompt couldn't be rendered in the current environment
+    } else {
+      // Something else when wrong
+    }
+  });
+} 
+
+function addIntern() {
+  inquirer .prompt([
+    {
+        name: "internName",
+        type: "input",
+        message: "What is the interns name?"
+    },
+    {
+        name: "internId",
+        type: "input",
+        message: "What is the interns ID?"
+    },
+    {
+        name: "internEmail",
+        type: "input",
+        message: "What is the interns Email?"
+    },
+    {
+        name: "school",
+        type: "input",
+        message: "What is the interns school?"
+    },
+  ])
+  .then(answers => {
+    const intern = new Intern (answers.internName, answers.internId, answers.internEmail, answers.school)
+    team.push(intern)
+    console.log(team)
+    managerSelection()
+  });
+} 
 
 
 // After the user has input all employees desired, call the `render` function (required
