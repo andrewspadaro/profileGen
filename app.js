@@ -7,7 +7,7 @@ const fs = require("fs");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
-
+console.log(outputPath);
 const render = require("./lib/htmlRenderer");
 const team = [];
 
@@ -70,10 +70,13 @@ inquirer .prompt([
         } else {
             // take team and create a file called team.html in the output folder
             console.log('test')
+            console.log(team);
+            console.log(outputPath);
             fs.writeFileSync(outputPath, render(team), 'utf-8')
         }
       })
       .catch(error => {
+        console.log(error);
         if(error.isTtyError) {
           // Prompt couldn't be rendered in the current environment
         } else {
